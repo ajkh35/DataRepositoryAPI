@@ -37,7 +37,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   # Paperclip for uploading images
-  gem 'paperclip'
+  gem 'paperclip', '~> 5.2.0'
   # Token based authentication
   gem 'devise_token_auth'
   gem 'omniauth'
