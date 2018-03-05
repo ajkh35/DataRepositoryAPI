@@ -2,7 +2,6 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
 var port = process.env.port || 3000;
-var User = require('./models/user');
 var mongoose = require('mongoose');
 var morgan = require('morgan');
 var router = require('./routes/router');

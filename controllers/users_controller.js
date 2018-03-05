@@ -42,19 +42,19 @@ exports.update_user = function(req,res){
     {$set: req.body},
     function(err,user){
         if(err) return res.status(401).json(err);
-        res.status(200).send('Updated successfully.');
+        res.status(200).json({message: 'Updated successfully.'});
     });
 };
 
 exports.update_password = function(req,res){
     if(req.body.password.length < 6){
-        return res.status(422).send('Password length too short!');
+        return res.status(422).json({message: 'Password length too short!'});
     }else{
         User.findByIdAndUpdate({'_id' : req.params.id},
         {$set: {password: bcrypt.hashSync(req.body.password, 10)}},
         function(err,user){
             if(err) return res.status(401).json(err);
-            res.status(200).send('Password updated successfully.');
+            res.status(200).json({message: 'Password updated successfully.'});
         });
     }
 };
@@ -62,20 +62,20 @@ exports.update_password = function(req,res){
 exports.delete_user = function(req,res){
     User.findOneAndRemove({'_id' : req.params.id}, function(err,user){
         if(err) return res.status(401).json(err);
-        res.status(200).send('User deleted successfully.');
+        res.status(200).json({message: 'User deleted successfully.'});
     });
 };
 
 exports.login = function(req,res){
     User.findOne({'email' : req.body.email}, function(err,user){
-        if(err || user === null){ return res.status(404).send('Email not found');}
+        if(err || user === null){ return res.status(404).json({message: 'Email not found'});}
         if(!bcrypt.compareSync(req.body.password, user.password)){
-            return res.status(403).send('Password incorrect');
+            return res.status(403).json({message: 'Password incorrect'});
         }else{
             var token = jwt.sign(user.toJSON(), config.jwt_secret,{
                 expiresIn: 3600 * 24
             });
-            res.status(200).json({user,token: token});
+            res.status(200).json({user,token: token,message: 'Successfully logged in!'});
         }
     });
 };
