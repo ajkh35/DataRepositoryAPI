@@ -14,7 +14,7 @@ exports.user_details = function(req,res){
     User.findOne({'_id' : req.params.id}, function(err, user){
         if(err) return res.status(401).json(err);
         res.status(200).json(user);
-    });
+    })
 };
 
 exports.add_user = function(req,res){
@@ -23,10 +23,10 @@ exports.add_user = function(req,res){
         last_name: req.body.last_name,
         user_name: req.body.user_name,
         email: req.body.email,
-        password: req.body.password.length < 6 ? 
-            req.body.password : bcrypt.hashSync(req.body.password, 10)
+        password: req.body.password.length < 6 ?
+            req.body.password : bcrypt.hashSync(req.body.password, 10),
     });
-    
+
     newUser.save(function(err){
         if (err) {
             return res.status(422).send(err);

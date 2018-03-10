@@ -8,7 +8,10 @@ var UserSchema = new Schema({
     user_name: {type: String,required: [true, 'User Name is required'],unique: true},
     email: {type: String,required: [true, 'Email is required'],unique: true},
     password: {type: String, minlength: 6},
-    songs: [{type: Schema.Types.ObjectId, ref: 'Song'}]
+    avatar: {data: Buffer, contentType: String},
+    songs: [{type: Schema.Types.ObjectId, ref: 'Song'}],
+    movies: [{type: Schema.Types.ObjectId, ref: 'Movie'}],
+    games: [{type: Schema.Types.ObjectId, ref: 'Game'}]
 }, {collection: 'user'}, {timestamps: true});
 
 var User = mongoose.model('User', UserSchema);
